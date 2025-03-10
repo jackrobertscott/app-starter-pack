@@ -16,8 +16,8 @@ This is a monorepo with three main folders:
   - React Router for client-side routing
   - tRPC client for type-safe API communication
 - **Key Files**:
-  - `src/browser.tsx`: Main entry point
-  - `src/app.tsx`: Main application component
+  - `src/browser-entry.tsx`: Main entry point
+  - `src/app-component.tsx`: Main application component
   - `src/browser-config.ts`: Configuration for connecting to the backend
   - `src/utils-trpc-client.ts`: tRPC client setup
 
@@ -125,3 +125,12 @@ interface UserDocument {
   updatedAt: Date;       // Last update timestamp
 }
 ```
+
+## Code Style and Naming Conventions
+
+### File Naming Conventions
+- **All files**: Use kebab-case for all file names (e.g., `file-name.ts`)
+- **Components**: React component files should use kebab-case (e.g., `user-profile.tsx`, `login-form.tsx`)
+- **Utilities**: Utility files should be prefixed with `utils-` and use kebab-case (e.g., `utils-formatting.ts`)
+- **Schemas**: Schema files should be prefixed with `schemas-` and use kebab-case (e.g., `schemas-user.ts`)
+- **Routers**: Router files should be prefixed with `router-` and use kebab-case (e.g., `router-user.ts`)

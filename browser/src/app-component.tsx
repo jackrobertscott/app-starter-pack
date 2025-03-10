@@ -1,20 +1,27 @@
 import {trpc} from "@browser/utils-trpc-client"
-import {TypeofUser} from "@shared/schemas-user"
+import {TypeofUser, userSchema} from "@shared/schemas-user"
 import {useEffect, useState} from "react"
 
 export function App() {
-  const [users, setUsers] = useState<TypeofUser[]>([])
+  const [userList, setUserList] = useState<TypeofUser[]>([])
 
   useEffect(() => {
-    trpc.userList.query().then(setUsers)
+    trpc.userList.query().then((i) => {
+      setUserList(i.map((j) => userSchema().parse(j)))
+    })
   }, [])
 
   return (
     <div className="text-2xl p-4">
-      User List
+      <h1 className="text-3xl font-bold">Users</h1>
       <ul>
-        {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
+        {userList.map((user) => (
+          <li key={user.id}>
+            <div className="text-lg">{user.email}</div>
+            <div className="text-sm text-gray-500">
+              Created: {user.createdAt?.toLocaleString()}
+            </div>
+          </li>
         ))}
       </ul>
     </div>

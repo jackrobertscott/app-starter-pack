@@ -4,8 +4,8 @@ export const userSchema = () => {
   return z.object({
     id: z.string(),
     email: z.string().email(),
-    createdAt: z.date().optional(),
-    updatedAt: z.date().optional(),
+    createdAt: z.coerce.date().optional(),
+    updatedAt: z.coerce.date().optional(),
   })
 }
 

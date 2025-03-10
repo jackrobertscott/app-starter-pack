@@ -1,7 +1,8 @@
-import {App} from "@browser/app"
+import {App} from "@browser/app-component"
+import {LoginPage} from "@browser/login-page"
 import {updateZodErrorFormat} from "@shared/utils-zod-error"
 import {createRoot} from "react-dom/client"
-import {BrowserRouter} from "react-router"
+import {BrowserRouter, Route, Routes} from "react-router-dom"
 import "./index.css"
 
 updateZodErrorFormat()
@@ -10,7 +11,10 @@ const rootElement = document.getElementById("root")
 
 const root = (
   <BrowserRouter>
-    <App />
+    <Routes>
+      <Route path="/" element={<LoginPage />} />
+      <Route path="/home" element={<App />} />
+    </Routes>
   </BrowserRouter>
 )
 
