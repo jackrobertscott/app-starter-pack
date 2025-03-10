@@ -77,8 +77,8 @@ A modern web application starter kit built with React, tRPC, and MongoDB.
    ```
 
 5. Access the application:
-   - Frontend: http://localhost:5173
-   - Backend: http://localhost:3001
+   - Frontend: http://localhost:3000
+   - Backend: http://localhost:4000
 
 ## Project Structure
 
