@@ -5,6 +5,7 @@ import {serverConfig} from "./server-config"
 // Global MongoDB client instance
 let client: MongoClient | null = null
 let db: Db | null = null
+let connectionPromise: Promise<MongoClient> | null = null
 
 // MongoDB collection names
 const COLLECTIONS = {
@@ -16,23 +17,33 @@ const COLLECTIONS = {
  */
 export async function getMongoClient(): Promise<MongoClient> {
   if (client) return client
-
-  client = new MongoClient(serverConfig.MONGO_URI, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    },
+  
+  // If a connection is already in progress, return that promise to avoid multiple connection attempts
+  if (connectionPromise) return connectionPromise
+  
+  connectionPromise = new Promise<MongoClient>((resolve, reject) => {
+    const newClient = new MongoClient(serverConfig.MONGO_URI, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
+    })
+    
+    newClient.connect()
+      .then(() => {
+        console.log("Connected to MongoDB")
+        client = newClient
+        resolve(newClient)
+      })
+      .catch((error) => {
+        console.error("MongoDB connection error:", error)
+        connectionPromise = null
+        reject(error)
+      })
   })
-
-  try {
-    await client.connect()
-    console.log("Connected to MongoDB")
-    return client
-  } catch (error) {
-    console.error("MongoDB connection error:", error)
-    throw error
-  }
+  
+  return connectionPromise
 }
 
 /**

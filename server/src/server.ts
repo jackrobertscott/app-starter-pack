@@ -12,8 +12,11 @@ console.log(`Starting ${serverConfig.APP_NAME}...`)
 // Initialize MongoDB connection
 async function initMongoDB() {
   try {
+    console.log("Initializing MongoDB connection...")
+    const startTime = Date.now()
     await getMongoClient()
-    console.log("MongoDB initialized")
+    const elapsed = Date.now() - startTime
+    console.log(`MongoDB initialized in ${elapsed}ms`)
   } catch (error) {
     console.error("Failed to initialize MongoDB:", error)
     process.exit(1)

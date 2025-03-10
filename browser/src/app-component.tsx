@@ -27,6 +27,7 @@ export function App() {
   const headerRef = useRef<HTMLDivElement>(null)
 
   const userCount = listUsers.data?.length || 0
+  const isLoading = listUsers.isLoading
 
   const handleLogout = () => {
     logout()
@@ -36,6 +37,19 @@ export function App() {
   const handleUserSelect = (userId: string) => {
     console.log(`User selected: ${userId}`)
     // Handle user selection
+  }
+
+  // Display a loading state if the data is being fetched
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-t-indigo-600 border-r-transparent border-b-indigo-600 border-l-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <h2 className="text-lg font-semibold text-gray-700">Loading dashboard...</h2>
+          <p className="text-gray-500 mt-1">Please wait while we prepare your dashboard</p>
+        </div>
+      </div>
+    )
   }
 
   return (
