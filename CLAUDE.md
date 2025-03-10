@@ -35,6 +35,7 @@ This is a monorepo with three main folders:
   - `src/server-config.ts`: Server configuration
   - `src/router-user.ts`: User-related API endpoints
   - `src/utils-trpc.ts`: tRPC server setup
+  - `src/utils-mongodb.ts`: MongoDB utilities and connection management
 
 ### Shared (Common)
 
@@ -83,4 +84,44 @@ cd shared && npm install
 
 # Build shared library
 cd shared && npm run build
+```
+
+## MongoDB Setup
+
+The server uses MongoDB for data storage. By default, it connects to a local MongoDB instance.
+
+### Local Development
+1. Install MongoDB locally or use Docker:
+   ```bash
+   # Run MongoDB with Docker
+   docker run -d -p 27017:27017 --name mongodb mongo:latest
+   ```
+
+2. Set the MongoDB URI in your `.env` file:
+   ```
+   MONGODB_URI=mongodb://localhost:27017/app-starter
+   ```
+
+### Environment Variables
+Add these to your `.env` file in the server directory:
+```
+# Required for all environments
+MONGODB_URI=mongodb://localhost:27017/app-starter
+
+# For production, use your actual MongoDB connection string
+# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/app-name
+```
+
+### User Collection Structure
+The application uses a `users` collection with the following structure:
+
+```typescript
+interface UserDocument {
+  _id?: string;          // MongoDB document ID
+  id: string;            // Application-specific UUID
+  name: string;          // User's name
+  email?: string;        // User's email (optional)
+  createdAt: Date;       // Creation timestamp
+  updatedAt: Date;       // Last update timestamp
+}
 ```

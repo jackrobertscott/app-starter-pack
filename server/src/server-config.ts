@@ -16,6 +16,8 @@ export const serverConfig = z
     JWT_SECRET: z.string().min(1),
     URL_CLIENT: z.string().min(1),
 
+    MONGODB_URI: z.string().min(1),
+
     AWS_ACCESS_KEY_ID: z.string().optional(),
     AWS_SECRET_ACCESS_KEY: z.string().optional(),
     AWS_DEFAULT_REGION: z.string().min(1),
