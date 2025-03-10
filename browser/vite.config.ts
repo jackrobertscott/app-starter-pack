@@ -15,6 +15,7 @@ export default defineConfig({
     alias: {
       "@browser": resolve(__dirname, "src"),
       "@shared": resolve(__dirname, "../shared/src"),
+      "@server": resolve(__dirname, "../server/src"),
     },
   },
   plugins: [
