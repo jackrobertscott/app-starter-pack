@@ -17,7 +17,7 @@ const COLLECTIONS = {
 export async function getMongoClient(): Promise<MongoClient> {
   if (client) return client
 
-  client = new MongoClient(serverConfig.MONGODB_URI, {
+  client = new MongoClient(serverConfig.MONGO_URI, {
     serverApi: {
       version: ServerApiVersion.v1,
       strict: true,
