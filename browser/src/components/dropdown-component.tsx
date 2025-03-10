@@ -1,7 +1,13 @@
-import { Fragment, ReactNode } from 'react'
-import { Menu, Transition } from '@headlessui/react'
-import { Icon } from './icon-component'
-import { mdiChevronDown } from '@mdi/js'
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Transition,
+} from "@headlessui/react"
+import {mdiChevronDown} from "@mdi/js"
+import {Fragment, ReactNode} from "react"
+import {Icon} from "./icon-component"
 
 type DropdownItem = {
   label: string
@@ -22,25 +28,20 @@ type DropdownProps = {
 export function Dropdown({
   label,
   items,
-  buttonClassName = '',
-  menuClassName = '',
+  buttonClassName = "",
+  menuClassName = "",
   icon = mdiChevronDown,
-  children
+  children,
 }: DropdownProps) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button
-          className={`inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${buttonClassName}`}
-        >
+        <MenuButton
+          className={`inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${buttonClassName}`}>
           {label}
           {children}
-          <Icon
-            path={icon}
-            className="w-5 h-5 ml-2 -mr-1"
-            aria-hidden="true"
-          />
-        </Menu.Button>
+          <Icon path={icon} className="w-5 h-5 ml-2 -mr-1" aria-hidden="true" />
+        </MenuButton>
       </div>
 
       <Transition
@@ -50,24 +51,21 @@ export function Dropdown({
         enterTo="transform opacity-100 scale-100"
         leave="transition ease-in duration-75"
         leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items
-          className={`absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${menuClassName}`}
-        >
+        leaveTo="transform opacity-0 scale-95">
+        <MenuItems
+          className={`absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${menuClassName}`}>
           <div className="py-1">
             {items.map((item, index) => (
-              <Menu.Item key={index} disabled={item.disabled}>
-                {({ active }) => (
+              <MenuItem key={index} disabled={item.disabled}>
+                {({active}) => (
                   <button
                     onClick={item.onClick}
                     disabled={item.disabled}
                     className={`${
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700"
                     } ${
-                      item.disabled ? 'opacity-50 cursor-not-allowed' : ''
-                    } group flex w-full items-center px-4 py-2 text-sm`}
-                  >
+                      item.disabled ? "opacity-50 cursor-not-allowed" : ""
+                    } group flex w-full items-center px-4 py-2 text-sm`}>
                     {item.iconPath && (
                       <Icon
                         path={item.iconPath}
@@ -77,10 +75,10 @@ export function Dropdown({
                     {item.label}
                   </button>
                 )}
-              </Menu.Item>
+              </MenuItem>
             ))}
           </div>
-        </Menu.Items>
+        </MenuItems>
       </Transition>
     </Menu>
   )

@@ -1,3 +1,4 @@
+import {logout} from "@browser/utils-auth"
 import {useTRPC} from "@browser/utils-trpc-context"
 import {
   mdiAccountMultiple,
@@ -7,10 +8,12 @@ import {
   mdiCog,
   mdiDelete,
   mdiExport,
+  mdiLogout,
   mdiRefresh,
 } from "@mdi/js"
 import {useQuery} from "@tanstack/react-query"
 import {useRef} from "react"
+import {useNavigate} from "react-router-dom"
 import {Button} from "./components/button-component"
 import {DashboardCard} from "./components/dashboard-card-component"
 import {Dropdown} from "./components/dropdown-component"
@@ -19,10 +22,16 @@ import {UserList} from "./components/user-list-component"
 
 export function App() {
   const trpc = useTRPC()
+  const navigate = useNavigate()
   const listUsers = useQuery(trpc.userList.queryOptions())
   const headerRef = useRef<HTMLDivElement>(null)
 
   const userCount = listUsers.data?.length || 0
+
+  const handleLogout = () => {
+    logout()
+    navigate("/")
+  }
 
   const handleUserSelect = (userId: string) => {
     console.log(`User selected: ${userId}`)
@@ -40,6 +49,12 @@ export function App() {
             <div className="flex items-center space-x-2">
               <Button variant="icon" iconPath={mdiBellRing} />
               <Button variant="icon" iconPath={mdiCog} />
+              <Button
+                variant="icon"
+                iconPath={mdiLogout}
+                onClick={handleLogout}>
+                Logout
+              </Button>
             </div>
           </div>
         </div>

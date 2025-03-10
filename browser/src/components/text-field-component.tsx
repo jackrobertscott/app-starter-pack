@@ -24,7 +24,7 @@ export function TextField({
   // Set default icon based on field type if not provided
   const defaultIconPath = type === "password" ? mdiLock : mdiEmail
   const fieldIcon = iconPath || defaultIconPath
-  
+
   // Handle input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value)
@@ -33,7 +33,7 @@ export function TextField({
   return (
     <div className="relative">
       <label
-        htmlFor={`field-${label.toLowerCase().replace(/\s+/g, '-')}`}
+        htmlFor={`field-${label.toLowerCase().replace(/\s+/g, "-")}`}
         className="block text-sm font-medium text-gray-700 mb-1">
         {label}
       </label>
@@ -43,7 +43,7 @@ export function TextField({
         </div>
         <input
           ref={inputRef}
-          id={`field-${label.toLowerCase().replace(/\s+/g, '-')}`}
+          id={`field-${label.toLowerCase().replace(/\s+/g, "-")}`}
           type={type}
           value={value}
           onChange={handleChange}

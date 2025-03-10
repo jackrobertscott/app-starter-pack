@@ -1,8 +1,9 @@
 import {useTRPC} from "@browser/utils-trpc-context"
+import {getRememberMe, getSavedEmail, setAuthToken} from "@browser/utils-auth"
 import {mdiAccount, mdiEmail, mdiLock, mdiLogin} from "@mdi/js"
 import {useMutation} from "@tanstack/react-query"
-import React, {useRef, useState} from "react"
-import {useNavigate} from "react-router-dom"
+import React, {useEffect, useRef, useState} from "react"
+import {Link, useLocation, useNavigate} from "react-router-dom"
 import {Button} from "./components/button-component"
 import {FormCard} from "./components/form-card-component"
 import {TextField} from "./components/text-field-component"
@@ -10,15 +11,29 @@ import {TextField} from "./components/text-field-component"
 export function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [rememberMe, setRememberMe] = useState(false)
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
   const emailInputRef = useRef<HTMLInputElement>(null)
   const passwordInputRef = useRef<HTMLInputElement>(null)
+  const rememberMeRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
+  const location = useLocation()
 
   const trpc = useTRPC()
   const login = useMutation(trpc.login.mutationOptions())
+
+  // Initialize remember me and email from previous preferences
+  useEffect(() => {
+    setRememberMe(getRememberMe())
+    
+    // Pre-fill email if it was saved
+    const savedEmail = getSavedEmail()
+    if (savedEmail) {
+      setEmail(savedEmail)
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -31,11 +46,12 @@ export function LoginPage() {
         password,
       })
 
-      // Store token in localStorage
-      localStorage.setItem("authToken", result.token)
+      // Store token using auth utility with remember me preference and email
+      setAuthToken(result.token, rememberMe, email)
 
-      // Redirect to home page
-      navigate("/home")
+      // Redirect to home page or intended destination
+      const destination = location.state?.from || "/home"
+      navigate(destination, { replace: true })
     } catch (err: any) {
       setError(err.message || "Invalid email or password")
     } finally {
@@ -80,6 +96,9 @@ export function LoginPage() {
               name="remember-me"
               type="checkbox"
               className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              ref={rememberMeRef}
             />
             <label
               htmlFor="remember-me"
@@ -105,11 +124,11 @@ export function LoginPage() {
 
         <div className="text-center mt-4">
           <span className="text-sm text-gray-600">Don't have an account? </span>
-          <a
-            href="/signup"
+          <Link
+            to="/signup"
             className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
             Sign up
-          </a>
+          </Link>
         </div>
       </form>
     </FormCard>

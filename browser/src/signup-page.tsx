@@ -1,8 +1,9 @@
+import {getRememberMe, setAuthToken} from "@browser/utils-auth"
 import {useTRPC} from "@browser/utils-trpc-context"
 import {mdiAccount, mdiAccountPlus, mdiEmail, mdiLock} from "@mdi/js"
 import {useMutation} from "@tanstack/react-query"
-import React, {useRef, useState} from "react"
-import {useNavigate} from "react-router-dom"
+import React, {useState, useEffect, useRef} from "react"
+import {Link, useLocation, useNavigate} from "react-router-dom"
 import {Button} from "./components/button-component"
 import {FormCard} from "./components/form-card-component"
 import {TextField} from "./components/text-field-component"
@@ -12,17 +13,20 @@ export function SignupPage() {
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [rememberMe, setRememberMe] = useState(false)
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const trpc = useTRPC()
-
-  const emailInputRef = useRef<HTMLInputElement>(null)
-  const passwordInputRef = useRef<HTMLInputElement>(null)
-  const firstNameInputRef = useRef<HTMLInputElement>(null)
-  const lastNameInputRef = useRef<HTMLInputElement>(null)
-
+  
+  const rememberMeRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
+  const location = useLocation()
   const signup = useMutation(trpc.signup.mutationOptions())
+  
+  // Initialize remember me from previous preference
+  useEffect(() => {
+    setRememberMe(getRememberMe())
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,11 +41,12 @@ export function SignupPage() {
         password,
       })
 
-      // Store token in localStorage
-      localStorage.setItem("authToken", result.token)
+      // Store token using auth utility with remember me preference and email
+      setAuthToken(result.token, rememberMe, email)
 
-      // Redirect to home page
-      navigate("/home")
+      // Redirect to home page or intended destination
+      const destination = location.state?.from || "/home"
+      navigate(destination, { replace: true })
     } catch (err: any) {
       setError(err.message || "An error occurred during signup")
     } finally {
@@ -64,16 +69,14 @@ export function SignupPage() {
             placeholder="John"
             value={firstName}
             onChange={setFirstName}
-            inputRef={firstNameInputRef}
             iconPath={mdiAccount}
           />
-          
+
           <TextField
             label="Last Name"
             placeholder="Doe"
             value={lastName}
             onChange={setLastName}
-            inputRef={lastNameInputRef}
             iconPath={mdiAccount}
           />
 
@@ -82,7 +85,6 @@ export function SignupPage() {
             placeholder="you@example.com"
             value={email}
             onChange={setEmail}
-            inputRef={emailInputRef}
             iconPath={mdiEmail}
             type="email"
           />
@@ -93,9 +95,25 @@ export function SignupPage() {
             value={password}
             onChange={setPassword}
             type="password"
-            inputRef={passwordInputRef}
             iconPath={mdiLock}
           />
+        </div>
+
+        <div className="flex items-center my-4">
+          <input
+            id="remember-me"
+            name="remember-me"
+            type="checkbox"
+            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+            ref={rememberMeRef}
+          />
+          <label
+            htmlFor="remember-me"
+            className="ml-2 block text-sm text-gray-700">
+            Remember me
+          </label>
         </div>
 
         <div>
@@ -108,11 +126,11 @@ export function SignupPage() {
           <span className="text-sm text-gray-600">
             Already have an account?{" "}
           </span>
-          <a
-            href="/"
+          <Link
+            to="/"
             className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
             Sign in
-          </a>
+          </Link>
         </div>
       </form>
     </FormCard>
