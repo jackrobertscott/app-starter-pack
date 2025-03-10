@@ -58,13 +58,13 @@ A modern web application starter kit built with React, tRPC, and MongoDB.
      PORT=3001
      APP_NAME=AppStarter
      JWT_SECRET=your_secret_here
-     URL_CLIENT=http://localhost:5173
+     URL_CLIENT=http://localhost:3000
      MONGO_URI=mongodb://localhost:27017/app-starter
      ```
    - Browser `.env`:
      ```
-     VITE_SERVER_URL=http://localhost:3001
-     VITE_BROWSER_URL=http://localhost:5173
+     VITE_SERVER_URL=http://localhost:4000
+     VITE_BROWSER_URL=http://localhost:3000
      ```
 
 4. Start Development Servers:
