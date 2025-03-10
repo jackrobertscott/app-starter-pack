@@ -1,16 +1,19 @@
 import {createId} from "@paralleldrive/cuid2"
 import {collections} from "@server/utils-mongodb"
 import {publicProcedure, router} from "@server/utils-trpc"
-import {TypeofUser, userSchema} from "@shared/schemas-user"
+import {TypeofUser, UserPublic, userPublicSchema, userSchema} from "@shared/schemas-user"
+import {z} from "zod"
+import {hashPassword} from "./utils-auth"
 
 export const userRouter = router({
   userList: publicProcedure.query(async () => {
     const usersCollection = await collections.users()
     const users = await usersCollection.find({}).sort({createdAt: -1}).toArray()
 
-    return users.map((user) => ({
+    return users.map((user): UserPublic => ({
       id: user.id,
       email: user.email,
+      name: user.name,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     }))
@@ -33,15 +36,18 @@ export const userRouter = router({
       return {
         id: user.id,
         email: user.email,
+        name: user.name,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
-      }
+      } as UserPublic
     }),
 
   userCreate: publicProcedure
     .input(
       userSchema().pick({
         email: true,
+      }).extend({
+        password: z.string().min(6)
       })
     )
     .mutation(async (opts) => {
@@ -58,16 +64,24 @@ export const userRouter = router({
       }
 
       const now = new Date()
+      const hashedPassword = await hashPassword(opts.input.password)
+      
       const newUser: TypeofUser = {
         id: createId(),
         email: opts.input.email,
+        password: hashedPassword,
         createdAt: now,
         updatedAt: now,
       }
 
       await usersCollection.insertOne(newUser)
 
-      return newUser
+      return {
+        id: newUser.id,
+        email: newUser.email,
+        createdAt: newUser.createdAt,
+        updatedAt: newUser.updatedAt,
+      } as UserPublic
     }),
 
   userUpdate: publicProcedure
@@ -107,7 +121,13 @@ export const userRouter = router({
 
       await usersCollection.updateOne({id: opts.input.id}, {$set: updatedUser})
 
-      return updatedUser
+      return {
+        id: updatedUser.id,
+        email: updatedUser.email,
+        name: updatedUser.name,
+        createdAt: updatedUser.createdAt,
+        updatedAt: updatedUser.updatedAt,
+      } as UserPublic
     }),
 
   userDelete: publicProcedure

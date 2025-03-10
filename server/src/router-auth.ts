@@ -1,5 +1,5 @@
 import {TRPCError} from "@trpc/server"
-import {v4 as uuidv4} from "uuid"
+import {createId} from "@paralleldrive/cuid2"
 import {loginInputSchema, signupInputSchema} from "@shared/schemas-user"
 import {publicProcedure, router} from "./utils-trpc"
 import {
@@ -54,7 +54,7 @@ export const authRouter = router({
 
     const hashedPassword = await hashPassword(input.password)
     const now = new Date()
-    const id = uuidv4()
+    const id = createId()
 
     const newUser = {
       id,

@@ -1,10 +1,11 @@
-import {mdiAccount, mdiEmail, mdiLock, mdiAccountPlus} from "@mdi/js"
+import {useTRPC} from "@browser/utils-trpc-context"
+import {mdiAccount, mdiAccountPlus, mdiEmail, mdiLock} from "@mdi/js"
+import {useMutation} from "@tanstack/react-query"
 import React, {useRef, useState} from "react"
 import {useNavigate} from "react-router-dom"
 import {Button} from "./components/button-component"
 import {FormCard} from "./components/form-card-component"
 import {TextField} from "./components/text-field-component"
-import {trpc} from "./utils-trpc-client"
 
 export function SignupPage() {
   const [name, setName] = useState("")
@@ -12,29 +13,30 @@ export function SignupPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  
+  const trpc = useTRPC()
+
   const emailInputRef = useRef<HTMLInputElement>(null)
   const passwordInputRef = useRef<HTMLInputElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
-  
+
   const navigate = useNavigate()
-  const signup = trpc.signup.useMutation()
+  const signup = useMutation(trpc.signup.mutationOptions())
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
     setIsLoading(true)
-    
+
     try {
       const result = await signup.mutateAsync({
         name,
         email,
         password,
       })
-      
+
       // Store token in localStorage
       localStorage.setItem("authToken", result.token)
-      
+
       // Redirect to home page
       navigate("/home")
     } catch (err: any) {
@@ -52,7 +54,7 @@ export function SignupPage() {
             <p className="text-red-700 text-sm">{error}</p>
           </div>
         )}
-        
+
         <div className="rounded-md space-y-5">
           <TextField
             label="Name"
@@ -62,7 +64,7 @@ export function SignupPage() {
             inputRef={nameInputRef}
             iconPath={mdiAccount}
           />
-          
+
           <TextField
             label="Email address"
             placeholder="you@example.com"
@@ -72,7 +74,7 @@ export function SignupPage() {
             iconPath={mdiEmail}
             type="email"
           />
-          
+
           <TextField
             label="Password"
             placeholder="Create a password"
@@ -91,7 +93,9 @@ export function SignupPage() {
         </div>
 
         <div className="text-center mt-4">
-          <span className="text-sm text-gray-600">Already have an account? </span>
+          <span className="text-sm text-gray-600">
+            Already have an account?{" "}
+          </span>
           <a
             href="/"
             className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
