@@ -13,6 +13,7 @@ Full-stack TypeScript application with three main packages:
 ## Key Technologies
 
 ### Frontend (Browser)
+
 - React 19
 - TailwindCSS for styling
 - React Router 7 for routing
@@ -22,6 +23,7 @@ Full-stack TypeScript application with three main packages:
 - Vite for building and bundling
 
 ### Backend (Server)
+
 - Node.js with TypeScript
 - tRPC for type-safe API endpoints
 - MongoDB for database
@@ -30,6 +32,7 @@ Full-stack TypeScript application with three main packages:
 - Stripe integration for payments
 
 ### Shared
+
 - TypeScript types shared between frontend and backend
 - Zod schemas for validation
 - Utilities for error handling and case conversion
@@ -37,6 +40,7 @@ Full-stack TypeScript application with three main packages:
 ## Development Commands
 
 ### Setup Commands
+
 ```bash
 # Initial setup of all packages (run from project root)
 cd shared && npm install && npm run build
@@ -45,6 +49,7 @@ cd ../browser && npm install
 ```
 
 ### Frontend Commands
+
 ```bash
 # Start development server (from browser directory)
 npm run dev
@@ -57,6 +62,7 @@ npm run start
 ```
 
 ### Backend Commands
+
 ```bash
 # Start development server (from server directory)
 npm run dev
@@ -71,11 +77,12 @@ npm run build
 ## Environment Variables
 
 ### Server (.env)
+
 ```
-PORT=3001
+PORT=4000
 APP_NAME=AppStarter
 JWT_SECRET=your_secret_here
-URL_CLIENT=http://localhost:5173
+URL_CLIENT=http://localhost:3000
 MONGO_URI=mongodb://localhost:27017/app-starter
 AWS_ACCESS_KEY_ID=your_key (optional)
 AWS_SECRET_ACCESS_KEY=your_secret (optional)
@@ -87,9 +94,10 @@ STRIPE_SECRET_KEY=your_stripe_key
 ```
 
 ### Browser (.env)
+
 ```
-VITE_SERVER_URL=http://localhost:3001
-VITE_BROWSER_URL=http://localhost:5173
+VITE_SERVER_URL=http://localhost:4000
+VITE_BROWSER_URL=http://localhost:3000
 VITE_STRIPE_KEY=your_stripe_public_key
 ```
 
@@ -98,22 +106,24 @@ VITE_STRIPE_KEY=your_stripe_public_key
 ### MongoDB Collections
 
 #### Users Collection
+
 ```typescript
 interface UserDocument {
-  _id?: string;          // MongoDB document ID
-  id: string;            // Application-specific UUID
-  email: string;         // User's email (for login)
-  firstName: string;     // User's first name
-  lastName: string;      // User's last name
-  password: string;      // Hashed password
-  createdAt: Date;       // Creation timestamp
-  updatedAt: Date;       // Last update timestamp
+  _id?: string // MongoDB document ID
+  id: string // Application-specific UUID
+  email: string // User's email (for login)
+  firstName: string // User's first name
+  lastName: string // User's last name
+  password: string // Hashed password
+  createdAt: Date // Creation timestamp
+  updatedAt: Date // Last update timestamp
 }
 ```
 
 ## Code Conventions
 
 ### File Naming
+
 - All files use kebab-case (e.g., `file-name.ts`)
 - Components: `component-name.tsx`
 - Utilities: `utils-purpose.ts`
@@ -121,11 +131,13 @@ interface UserDocument {
 - Routers: `router-entity.ts`
 
 ### Component Structure
+
 - React functional components with TypeScript
 - Props interface defined above component
 - Component export at bottom of file
 
 ### API Structure
+
 - tRPC routers organized by domain (users, auth, etc.)
 - Zod schemas used for validation
 - MongoDB access through utility functions
@@ -133,6 +145,7 @@ interface UserDocument {
 ## Common Tasks
 
 ### Adding a New Component
+
 1. Create new file in `browser/src/components/`
 2. Follow naming convention: `component-name.tsx`
 3. Import required dependencies from React, HeadlessUI, etc.
@@ -141,6 +154,7 @@ interface UserDocument {
 6. Export component
 
 ### Adding a New API Endpoint
+
 1. Identify the appropriate router file in `server/src/`
 2. Add new procedure to the tRPC router
 3. Implement validation using Zod schemas
@@ -148,11 +162,13 @@ interface UserDocument {
 5. Test the endpoint using the frontend or API client
 
 ### Styling Guidelines
+
 - Use TailwindCSS utility classes
 - Follow the existing component patterns
 - Prefer composition over inheritance
 
 ### Authentication Flow
+
 - JWT-based authentication
 - Login/signup through auth router
 - Token stored in local storage

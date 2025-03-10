@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    // Input
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
+
+    // Output
+    "noEmit": true,
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "build",
+
+    // Import/Export
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "moduleDetection": "force",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+
+    // Type Checking
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+
+    // Paths
+    "baseUrl": "..",
+    "paths": {
+      "@test/*": ["test/src/*"],
+      "@server/*": ["server/src/*"],
+      "@shared/*": ["shared/src/*"],
+      "@browser/*": ["browser/src/*"]
+    }
+  },
+  "include": ["src", "../server/src", "../shared/src", "../browser/src"],
+  "exclude": ["node_modules"]
+}

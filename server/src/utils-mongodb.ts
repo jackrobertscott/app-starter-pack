@@ -1,5 +1,6 @@
-import {TypeofUser} from "@shared/schemas-user"
-import {Collection, Db, Document, MongoClient, ServerApiVersion} from "mongodb"
+import type {TypeofUser} from "@shared/schemas-user"
+import {Collection, Db, MongoClient, ServerApiVersion} from "mongodb"
+import type {Document} from "mongodb"
 import {serverConfig} from "./server-config"
 
 // Global MongoDB client instance
@@ -17,10 +18,10 @@ const COLLECTIONS = {
  */
 export async function getMongoClient(): Promise<MongoClient> {
   if (client) return client
-  
+
   // If a connection is already in progress, return that promise to avoid multiple connection attempts
   if (connectionPromise) return connectionPromise
-  
+
   connectionPromise = new Promise<MongoClient>((resolve, reject) => {
     const newClient = new MongoClient(serverConfig.MONGO_URI, {
       serverApi: {
@@ -29,8 +30,9 @@ export async function getMongoClient(): Promise<MongoClient> {
         deprecationErrors: true,
       },
     })
-    
-    newClient.connect()
+
+    newClient
+      .connect()
       .then(() => {
         console.log("Connected to MongoDB")
         client = newClient
@@ -42,7 +44,7 @@ export async function getMongoClient(): Promise<MongoClient> {
         reject(error)
       })
   })
-  
+
   return connectionPromise
 }
 
