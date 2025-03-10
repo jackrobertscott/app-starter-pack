@@ -13,7 +13,8 @@ export const userRouter = router({
     return users.map((user): UserPublic => ({
       id: user.id,
       email: user.email,
-      name: user.name,
+      firstName: user.firstName,
+      lastName: user.lastName,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     }))
@@ -36,7 +37,8 @@ export const userRouter = router({
       return {
         id: user.id,
         email: user.email,
-        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       } as UserPublic
@@ -124,7 +126,8 @@ export const userRouter = router({
       return {
         id: updatedUser.id,
         email: updatedUser.email,
-        name: updatedUser.name,
+        firstName: updatedUser.firstName,
+        lastName: updatedUser.lastName,
         createdAt: updatedUser.createdAt,
         updatedAt: updatedUser.updatedAt,
       } as UserPublic

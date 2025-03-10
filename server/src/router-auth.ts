@@ -36,7 +36,8 @@ export const authRouter = router({
       user: {
         id: user.id,
         email: user.email,
-        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
       },
       token,
     }
@@ -60,7 +61,8 @@ export const authRouter = router({
       id,
       email: input.email,
       password: hashedPassword,
-      name: input.name,
+      firstName: input.firstName,
+      lastName: input.lastName,
       createdAt: now,
       updatedAt: now,
     }
@@ -74,7 +76,8 @@ export const authRouter = router({
       user: {
         id: newUser.id,
         email: newUser.email,
-        name: newUser.name,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
       },
       token,
     }

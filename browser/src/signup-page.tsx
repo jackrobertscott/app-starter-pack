@@ -8,7 +8,8 @@ import {FormCard} from "./components/form-card-component"
 import {TextField} from "./components/text-field-component"
 
 export function SignupPage() {
-  const [name, setName] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
@@ -17,7 +18,8 @@ export function SignupPage() {
 
   const emailInputRef = useRef<HTMLInputElement>(null)
   const passwordInputRef = useRef<HTMLInputElement>(null)
-  const nameInputRef = useRef<HTMLInputElement>(null)
+  const firstNameInputRef = useRef<HTMLInputElement>(null)
+  const lastNameInputRef = useRef<HTMLInputElement>(null)
 
   const navigate = useNavigate()
   const signup = useMutation(trpc.signup.mutationOptions())
@@ -29,7 +31,8 @@ export function SignupPage() {
 
     try {
       const result = await signup.mutateAsync({
-        name,
+        firstName,
+        lastName,
         email,
         password,
       })
@@ -57,11 +60,20 @@ export function SignupPage() {
 
         <div className="rounded-md space-y-5">
           <TextField
-            label="Name"
-            placeholder="John Doe"
-            value={name}
-            onChange={setName}
-            inputRef={nameInputRef}
+            label="First Name"
+            placeholder="John"
+            value={firstName}
+            onChange={setFirstName}
+            inputRef={firstNameInputRef}
+            iconPath={mdiAccount}
+          />
+          
+          <TextField
+            label="Last Name"
+            placeholder="Doe"
+            value={lastName}
+            onChange={setLastName}
+            inputRef={lastNameInputRef}
             iconPath={mdiAccount}
           />
 
