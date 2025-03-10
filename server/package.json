@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "now": "tsx src/server.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.698.0",
+    "@aws-sdk/client-sesv2": "^3.696.0",
+    "@aws-sdk/s3-request-presigner": "^3.698.0",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "busboy": "^1.6.0",
+    "canvas": "^2.11.2",
+    "chalk": "^5.3.0",
+    "dotenv": "^16.4.7",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.10.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/busboy": "^1.5.4",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^22.9.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.6.3"
+  }
+}
