@@ -1,7 +1,7 @@
 import {createId} from "@paralleldrive/cuid2"
 import {collections} from "@server/utils-mongodb"
 import {publicProcedure, router} from "@server/utils-trpc"
-import {TypeofUser, UserPublic, userPublicSchema, userSchema} from "@shared/schemas-user"
+import {TypeofUser, userPublicSchema, userSchema} from "@shared/schemas-user"
 import {z} from "zod"
 import {hashPassword} from "./utils-auth"
 
@@ -10,14 +10,7 @@ export const userRouter = router({
     const usersCollection = await collections.users()
     const users = await usersCollection.find({}).sort({createdAt: -1}).toArray()
 
-    return users.map((user): UserPublic => ({
-      id: user.id,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    }))
+    return users.map((i) => userPublicSchema.parse(i))
   }),
 
   userById: publicProcedure
@@ -34,23 +27,18 @@ export const userRouter = router({
         throw new Error(`User with ID ${opts.input.id} not found`)
       }
 
-      return {
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      } as UserPublic
+      return userPublicSchema.parse(user)
     }),
 
   userCreate: publicProcedure
     .input(
-      userSchema().pick({
-        email: true,
-      }).extend({
-        password: z.string().min(6)
-      })
+      userSchema()
+        .pick({
+          email: true,
+        })
+        .extend({
+          password: z.string().min(6),
+        })
     )
     .mutation(async (opts) => {
       const usersCollection = await collections.users()
@@ -67,7 +55,7 @@ export const userRouter = router({
 
       const now = new Date()
       const hashedPassword = await hashPassword(opts.input.password)
-      
+
       const newUser: TypeofUser = {
         id: createId(),
         email: opts.input.email,
@@ -78,12 +66,7 @@ export const userRouter = router({
 
       await usersCollection.insertOne(newUser)
 
-      return {
-        id: newUser.id,
-        email: newUser.email,
-        createdAt: newUser.createdAt,
-        updatedAt: newUser.updatedAt,
-      } as UserPublic
+      return userPublicSchema.parse(newUser)
     }),
 
   userUpdate: publicProcedure
@@ -123,14 +106,7 @@ export const userRouter = router({
 
       await usersCollection.updateOne({id: opts.input.id}, {$set: updatedUser})
 
-      return {
-        id: updatedUser.id,
-        email: updatedUser.email,
-        firstName: updatedUser.firstName,
-        lastName: updatedUser.lastName,
-        createdAt: updatedUser.createdAt,
-        updatedAt: updatedUser.updatedAt,
-      } as UserPublic
+      return userPublicSchema.parse(updatedUser)
     }),
 
   userDelete: publicProcedure

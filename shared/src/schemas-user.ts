@@ -17,8 +17,8 @@ export const userPublicSchema = z.object({
   email: z.string().email(),
   firstName: z.string().min(1).optional(),
   lastName: z.string().min(1).optional(),
-  createdAt: z.coerce.date().optional(),
-  updatedAt: z.coerce.date().optional(),
+  createdAt: z.union([z.date(), z.string()]).optional(),
+  updatedAt: z.union([z.date(), z.string()]).optional(),
 })
 
 export const loginInputSchema = z.object({
