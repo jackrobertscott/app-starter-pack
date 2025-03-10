@@ -1,5 +1,3 @@
-import React from "react"
-
 type IconProps = {
   path: string
   size?: number
@@ -7,15 +5,19 @@ type IconProps = {
   className?: string
 }
 
-export function Icon({path, size = 24, color = "currentColor", className = ""}: IconProps) {
+export function Icon({
+  path,
+  size = 24,
+  color = "currentColor",
+  className = "",
+}: IconProps) {
   return (
-    <svg 
+    <svg
       viewBox="0 0 24 24"
       width={size}
       height={size}
       fill={color}
-      className={className}
-    >
+      className={className}>
       <path d={path} />
     </svg>
   )

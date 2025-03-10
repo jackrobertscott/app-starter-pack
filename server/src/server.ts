@@ -1,6 +1,8 @@
+import {authRouter} from "@server/router-auth"
 import {userRouter} from "@server/router-user"
 import {serverConfig} from "@server/server-config"
 import {closeMongoConnection, getMongoClient} from "@server/utils-mongodb"
+import {createContext} from "@server/utils-trpc"
 import {createHTTPServer} from "@trpc/server/adapters/standalone"
 import {mergeRouters} from "@trpc/server/unstable-core-do-not-import"
 import cors from "cors"
@@ -19,7 +21,10 @@ async function initMongoDB() {
 }
 
 // Create tRPC router
-const appRouter = mergeRouters(userRouter)
+const appRouter = mergeRouters(
+  userRouter,
+  authRouter
+)
 
 // Initialize the server
 async function initServer() {
@@ -29,6 +34,7 @@ async function initServer() {
   // Start HTTP server
   const server = createHTTPServer({
     router: appRouter,
+    createContext,
     middleware: cors({
       origin: [serverConfig.URL_CLIENT],
       credentials: true,

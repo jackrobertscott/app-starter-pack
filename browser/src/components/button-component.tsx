@@ -7,13 +7,21 @@ type ButtonProps = {
   children: ReactNode
   onClick?: () => void
   iconPath?: string
+  disabled?: boolean
 }
 
-export function Button({type = "button", children, onClick, iconPath = mdiLogin}: ButtonProps) {
+export function Button({
+  type = "button",
+  children,
+  onClick,
+  iconPath = mdiLogin,
+  disabled,
+}: ButtonProps) {
   return (
     <button
       type={type}
       onClick={onClick}
+      disabled={disabled}
       className="group relative w-full flex justify-center py-3 px-4 
                 border border-transparent text-sm font-medium rounded-lg 
                 text-white bg-gradient-to-r from-indigo-600 to-blue-600 

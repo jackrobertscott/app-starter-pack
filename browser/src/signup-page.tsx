@@ -1,58 +1,68 @@
-import {useTRPC} from "@browser/utils-trpc-context"
-import {mdiAccount, mdiEmail, mdiLock, mdiLogin} from "@mdi/js"
-import {useMutation} from "@tanstack/react-query"
+import {mdiAccount, mdiEmail, mdiLock, mdiAccountPlus} from "@mdi/js"
 import React, {useRef, useState} from "react"
 import {useNavigate} from "react-router-dom"
 import {Button} from "./components/button-component"
 import {FormCard} from "./components/form-card-component"
 import {TextField} from "./components/text-field-component"
+import {trpc} from "./utils-trpc-client"
 
-export function LoginPage() {
+export function SignupPage() {
+  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-
+  
   const emailInputRef = useRef<HTMLInputElement>(null)
   const passwordInputRef = useRef<HTMLInputElement>(null)
+  const nameInputRef = useRef<HTMLInputElement>(null)
+  
   const navigate = useNavigate()
-
-  const trpc = useTRPC()
-  const login = useMutation(trpc.login.mutationOptions())
+  const signup = trpc.signup.useMutation()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
     setIsLoading(true)
-
+    
     try {
-      const result = await login.mutateAsync({
+      const result = await signup.mutateAsync({
+        name,
         email,
         password,
       })
-
+      
       // Store token in localStorage
       localStorage.setItem("authToken", result.token)
-
+      
       // Redirect to home page
       navigate("/home")
     } catch (err: any) {
-      setError(err.message || "Invalid email or password")
+      setError(err.message || "An error occurred during signup")
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <FormCard title="Welcome Back" iconPath={mdiAccount}>
+    <FormCard title="Create Account" iconPath={mdiAccount}>
       <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
         {error && (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
             <p className="text-red-700 text-sm">{error}</p>
           </div>
         )}
-
+        
         <div className="rounded-md space-y-5">
+          <TextField
+            label="Name"
+            placeholder="John Doe"
+            value={name}
+            onChange={setName}
+            inputRef={nameInputRef}
+            iconPath={mdiAccount}
+          />
+          
           <TextField
             label="Email address"
             placeholder="you@example.com"
@@ -62,9 +72,10 @@ export function LoginPage() {
             iconPath={mdiEmail}
             type="email"
           />
+          
           <TextField
             label="Password"
-            placeholder="Enter your password"
+            placeholder="Create a password"
             value={password}
             onChange={setPassword}
             type="password"
@@ -73,42 +84,18 @@ export function LoginPage() {
           />
         </div>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <input
-              id="remember-me"
-              name="remember-me"
-              type="checkbox"
-              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-            />
-            <label
-              htmlFor="remember-me"
-              className="ml-2 block text-sm text-gray-700">
-              Remember me
-            </label>
-          </div>
-
-          <div className="text-sm">
-            <a
-              href="#"
-              className="font-medium text-indigo-600 hover:text-indigo-500">
-              Forgot your password?
-            </a>
-          </div>
-        </div>
-
         <div>
-          <Button type="submit" iconPath={mdiLogin} disabled={isLoading}>
-            {isLoading ? "Signing in..." : "Sign in"}
+          <Button type="submit" iconPath={mdiAccountPlus} disabled={isLoading}>
+            {isLoading ? "Creating account..." : "Sign up"}
           </Button>
         </div>
 
         <div className="text-center mt-4">
-          <span className="text-sm text-gray-600">Don't have an account? </span>
+          <span className="text-sm text-gray-600">Already have an account? </span>
           <a
-            href="/signup"
+            href="/"
             className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-            Sign up
+            Sign in
           </a>
         </div>
       </form>
