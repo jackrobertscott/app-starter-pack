@@ -2,6 +2,7 @@ import {App} from "@browser/app"
 import {updateZodErrorFormat} from "@shared/utils-zod-error"
 import {createRoot} from "react-dom/client"
 import {BrowserRouter} from "react-router"
+import "./index.css"
 
 updateZodErrorFormat()
 
