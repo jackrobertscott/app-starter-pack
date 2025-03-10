@@ -1,5 +1,4 @@
-import {ReactNode, useRef} from "react"
-import {useButton} from "react-aria"
+import {ReactNode} from "react"
 import {Icon} from "./icon-component"
 
 type ButtonProps = {
@@ -23,15 +22,6 @@ export function Button({
   size = "md",
   fullWidth = true,
 }: ButtonProps) {
-  const ref = useRef<HTMLButtonElement>(null)
-  const {buttonProps} = useButton(
-    {
-      onPress: onClick,
-      isDisabled: disabled,
-      type,
-    },
-    ref
-  )
 
   // Variant styles
   const variantStyles = {
@@ -53,8 +43,7 @@ export function Button({
 
   return (
     <button
-      {...buttonProps}
-      ref={ref}
+      onClick={onClick}
       type={type}
       disabled={disabled}
       className={`

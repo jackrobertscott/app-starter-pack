@@ -1,6 +1,5 @@
 import {mdiEmail, mdiLock} from "@mdi/js"
 import {RefObject} from "react"
-import {useTextField} from "react-aria"
 import {Icon} from "./icon-component"
 
 type TextFieldProps = {
@@ -9,7 +8,7 @@ type TextFieldProps = {
   value: string
   onChange: (value: string) => void
   type?: string
-  inputRef: RefObject<HTMLInputElement | null>
+  inputRef?: RefObject<HTMLInputElement | null>
   iconPath?: string
 }
 
@@ -25,20 +24,16 @@ export function TextField({
   // Set default icon based on field type if not provided
   const defaultIconPath = type === "password" ? mdiLock : mdiEmail
   const fieldIcon = iconPath || defaultIconPath
-  const {labelProps, inputProps} = useTextField(
-    {
-      label,
-      value,
-      onChange,
-      type,
-    },
-    inputRef
-  )
+  
+  // Handle input change
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.value)
+  }
 
   return (
     <div className="relative">
       <label
-        {...labelProps}
+        htmlFor={`field-${label.toLowerCase().replace(/\s+/g, '-')}`}
         className="block text-sm font-medium text-gray-700 mb-1">
         {label}
       </label>
@@ -48,7 +43,10 @@ export function TextField({
         </div>
         <input
           ref={inputRef}
-          {...inputProps}
+          id={`field-${label.toLowerCase().replace(/\s+/g, '-')}`}
+          type={type}
+          value={value}
+          onChange={handleChange}
           required
           className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg 
                     text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 

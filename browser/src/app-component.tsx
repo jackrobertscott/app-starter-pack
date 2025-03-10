@@ -6,15 +6,18 @@ import {
   mdiChartLine, 
   mdiBellRing, 
   mdiCog,
-  mdiDotsHorizontal
+  mdiDotsHorizontal,
+  mdiRefresh,
+  mdiExport,
+  mdiDelete
 } from "@mdi/js"
 import {DashboardCard} from "./components/dashboard-card-component"
 import {StatsCard} from "./components/stats-card-component"
 import {UserList} from "./components/user-list-component"
 import {Button} from "./components/button-component"
 import {Icon} from "./components/icon-component"
+import {Dropdown} from "./components/dropdown-component"
 import {useRef} from "react"
-import {useButton} from "react-aria"
 
 export function App() {
   const trpc = useTRPC()
@@ -79,7 +82,17 @@ export function App() {
             title="Recent Users"
             iconPath={mdiAccountMultiple}
             accentColor="bg-indigo-600"
-            action={<Button variant="icon" iconPath={mdiDotsHorizontal} />}
+            action={
+              <Dropdown 
+                label="Actions" 
+                buttonClassName="text-xs py-1 px-2" 
+                items={[
+                  { label: 'Refresh', onClick: () => listUsers.refetch(), iconPath: mdiRefresh },
+                  { label: 'Export', onClick: () => console.log('Export clicked'), iconPath: mdiExport },
+                  { label: 'Delete', onClick: () => console.log('Delete clicked'), iconPath: mdiDelete, disabled: true }
+                ]} 
+              />
+            }
           >
             <UserList 
               users={listUsers.data || []} 
