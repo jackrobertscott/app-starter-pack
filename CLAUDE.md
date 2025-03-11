@@ -19,6 +19,7 @@ Full-stack TypeScript application with three main packages:
 - React Router 7 for routing
 - Tanstack Query for data fetching
 - HeadlessUI components
+- shadcn/ui components (based on Radix UI)
 - tRPC client for type-safe API calls
 - Vite for building and bundling
 
@@ -148,10 +149,17 @@ interface UserDocument {
 
 1. Create new file in `browser/src/components/`
 2. Follow naming convention: `component-name.tsx`
-3. Import required dependencies from React, HeadlessUI, etc.
+3. Import required dependencies from React, HeadlessUI, shadcn/ui, etc.
 4. Define component props interface
-5. Implement component using TailwindCSS for styling
+5. Implement component using TailwindCSS and the `cn()` utility for styling
 6. Export component
+
+### Using shadcn/ui Components
+
+1. Import the component from the relevant shadcn package
+2. Use the component with appropriate props and styling
+3. Customize styling using the `cn()` utility function
+4. For new shadcn components, install them using the CLI or create component files manually
 
 ### Adding a New API Endpoint
 
@@ -164,6 +172,8 @@ interface UserDocument {
 ### Styling Guidelines
 
 - Use TailwindCSS utility classes
+- Use the `cn()` utility function for combining and merging classes
+- Leverage shadcn/ui components for consistent UI elements
 - Follow the existing component patterns
 - Prefer composition over inheritance
 

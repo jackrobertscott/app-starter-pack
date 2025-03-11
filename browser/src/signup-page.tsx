@@ -1,6 +1,6 @@
 import {getRememberMe, setAuthToken} from "@browser/utils-auth"
 import {useTRPC} from "@browser/utils-trpc-context"
-import {mdiAccount, mdiAccountPlus, mdiEmail, mdiLock} from "@mdi/js"
+import { User, UserPlus, Mail, Lock } from "lucide-react"
 import {useMutation} from "@tanstack/react-query"
 import React, {useState, useEffect, useRef} from "react"
 import {Link, useLocation, useNavigate} from "react-router-dom"
@@ -55,7 +55,7 @@ export function SignupPage() {
   }
 
   return (
-    <FormCard title="Create Account" iconPath={mdiAccount}>
+    <FormCard title="Create Account" icon={User}>
       <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
         {error && (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
@@ -69,7 +69,7 @@ export function SignupPage() {
             placeholder="John"
             value={firstName}
             onChange={setFirstName}
-            iconPath={mdiAccount}
+            icon={User}
           />
 
           <TextField
@@ -77,7 +77,7 @@ export function SignupPage() {
             placeholder="Doe"
             value={lastName}
             onChange={setLastName}
-            iconPath={mdiAccount}
+            icon={User}
           />
 
           <TextField
@@ -85,7 +85,7 @@ export function SignupPage() {
             placeholder="you@example.com"
             value={email}
             onChange={setEmail}
-            iconPath={mdiEmail}
+            icon={Mail}
             type="email"
           />
 
@@ -95,7 +95,7 @@ export function SignupPage() {
             value={password}
             onChange={setPassword}
             type="password"
-            iconPath={mdiLock}
+            icon={Lock}
           />
         </div>
 
@@ -117,7 +117,7 @@ export function SignupPage() {
         </div>
 
         <div>
-          <Button type="submit" iconPath={mdiAccountPlus} disabled={isLoading}>
+          <Button type="submit" icon={UserPlus} disabled={isLoading}>
             {isLoading ? "Creating account..." : "Sign up"}
           </Button>
         </div>

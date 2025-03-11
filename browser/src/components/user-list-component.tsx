@@ -1,4 +1,4 @@
-import {mdiEmail, mdiOpenInNew} from "@mdi/js"
+import { Mail, ExternalLink } from "lucide-react"
 import {UserPublic} from "@shared/schemas-user"
 import {Button} from "./button-component"
 import {Icon} from "./icon-component"
@@ -29,7 +29,7 @@ function UserItem({user, onSelect}: {user: UserPublic; onSelect?: () => void}) {
       <div className="ml-2 flex-1 min-w-0">
         <h4 className="font-medium text-sm truncate">{displayName}</h4>
         <div className="flex items-center text-xs text-gray-500">
-          <Icon path={mdiEmail} size={12} className="mr-1" />
+          <Icon icon={Mail} size={12} className="mr-1" />
           <span className="truncate">{user.email}</span>
         </div>
       </div>
@@ -37,7 +37,7 @@ function UserItem({user, onSelect}: {user: UserPublic; onSelect?: () => void}) {
         <Button
           variant="icon"
           size="sm"
-          iconPath={mdiOpenInNew}
+          icon={ExternalLink}
           onClick={() => {
             onSelect?.()
           }}

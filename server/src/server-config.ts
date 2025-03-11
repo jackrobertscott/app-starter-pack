@@ -18,15 +18,15 @@ export const serverConfig = z
 
     MONGO_URI: z.string().min(1),
 
-    AWS_ACCESS_KEY_ID: z.string().optional(),
-    AWS_SECRET_ACCESS_KEY: z.string().optional(),
-    AWS_DEFAULT_REGION: z.string().min(1),
+    // AWS_ACCESS_KEY_ID: z.string().optional(),
+    // AWS_SECRET_ACCESS_KEY: z.string().optional(),
+    // AWS_DEFAULT_REGION: z.string().optional(),
 
-    AWS_SES_FROM_EMAIL: z.string().min(1),
-    AWS_S3_BUCKET: z.string().min(1),
-    AWS_S3_BUCKET_FOLDER: z.string().min(1),
+    // AWS_SES_FROM_EMAIL: z.string().min(1),
+    // AWS_S3_BUCKET: z.string().min(1),
+    // AWS_S3_BUCKET_FOLDER: z.string().min(1),
 
-    STRIPE_SECRET_KEY: z.string().min(1).startsWith("sk_"),
+    // STRIPE_SECRET_KEY: z.string().min(1).startsWith("sk_"),
   })
   .parse({
     ...process.env,

@@ -5,14 +5,14 @@ import {
   MenuItems,
   Transition,
 } from "@headlessui/react"
-import {mdiChevronDown} from "@mdi/js"
+import { ChevronDown, LucideIcon } from "lucide-react"
 import {Fragment, ReactNode} from "react"
 import {Icon} from "./icon-component"
 
 type DropdownItem = {
   label: string
   onClick: () => void
-  iconPath?: string
+  icon?: LucideIcon
   disabled?: boolean
 }
 
@@ -21,7 +21,7 @@ type DropdownProps = {
   items: DropdownItem[]
   buttonClassName?: string
   menuClassName?: string
-  icon?: string
+  icon?: LucideIcon
   children?: ReactNode
 }
 
@@ -30,7 +30,7 @@ export function Dropdown({
   items,
   buttonClassName = "",
   menuClassName = "",
-  icon = mdiChevronDown,
+  icon = ChevronDown,
   children,
 }: DropdownProps) {
   return (
@@ -40,7 +40,7 @@ export function Dropdown({
           className={`inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${buttonClassName}`}>
           {label}
           {children}
-          <Icon path={icon} className="w-5 h-5 ml-2 -mr-1" aria-hidden="true" />
+          <Icon icon={icon} className="w-5 h-5 ml-2 -mr-1" aria-hidden="true" />
         </MenuButton>
       </div>
 
@@ -66,9 +66,9 @@ export function Dropdown({
                     } ${
                       item.disabled ? "opacity-50 cursor-not-allowed" : ""
                     } group flex w-full items-center px-4 py-2 text-sm`}>
-                    {item.iconPath && (
+                    {item.icon && (
                       <Icon
-                        path={item.iconPath}
+                        icon={item.icon}
                         className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                       />
                     )}

@@ -1,16 +1,16 @@
 import {logout} from "@browser/utils-auth"
 import {useTRPC} from "@browser/utils-trpc-context"
 import {
-  mdiAccountMultiple,
-  mdiAccountPlus,
-  mdiBellRing,
-  mdiChartLine,
-  mdiCog,
-  mdiDelete,
-  mdiExport,
-  mdiLogout,
-  mdiRefresh,
-} from "@mdi/js"
+  Users,
+  UserPlus,
+  Bell,
+  LineChart,
+  Settings,
+  Trash,
+  FileOutput,
+  LogOut,
+  RefreshCw
+} from "lucide-react"
 import {useQuery} from "@tanstack/react-query"
 import {useRef} from "react"
 import {useNavigate} from "react-router-dom"
@@ -61,11 +61,11 @@ export function App() {
             <h1 className="text-lg font-semibold text-gray-900">Dashboard</h1>
 
             <div className="flex items-center space-x-2">
-              <Button variant="icon" iconPath={mdiBellRing} />
-              <Button variant="icon" iconPath={mdiCog} />
+              <Button variant="icon" icon={Bell} />
+              <Button variant="icon" icon={Settings} />
               <Button
                 variant="icon"
-                iconPath={mdiLogout}
+                icon={LogOut}
                 onClick={handleLogout}>
                 Logout
               </Button>
@@ -81,7 +81,7 @@ export function App() {
           <StatsCard
             title="Total Users"
             value={userCount}
-            iconPath={mdiAccountMultiple}
+            icon={Users}
             accentColor="bg-indigo-600"
             trend={{value: 12, label: "vs last month"}}
           />
@@ -89,7 +89,7 @@ export function App() {
           <StatsCard
             title="Active Users"
             value={Math.round(userCount * 0.8)}
-            iconPath={mdiAccountPlus}
+            icon={UserPlus}
             accentColor="bg-blue-600"
             trend={{value: 8, label: "vs last month"}}
           />
@@ -97,7 +97,7 @@ export function App() {
           <StatsCard
             title="Weekly Growth"
             value={`${userCount > 0 ? "5.2" : "0"}%`}
-            iconPath={mdiChartLine}
+            icon={LineChart}
             accentColor="bg-green-600"
             trend={{value: 2.1, label: "vs last week"}}
           />
@@ -107,7 +107,7 @@ export function App() {
         <div className="mb-5">
           <DashboardCard
             title="Recent Users"
-            iconPath={mdiAccountMultiple}
+            icon={Users}
             accentColor="bg-indigo-600"
             action={
               <Dropdown
@@ -117,17 +117,17 @@ export function App() {
                   {
                     label: "Refresh",
                     onClick: () => listUsers.refetch(),
-                    iconPath: mdiRefresh,
+                    icon: RefreshCw,
                   },
                   {
                     label: "Export",
                     onClick: () => console.log("Export clicked"),
-                    iconPath: mdiExport,
+                    icon: FileOutput,
                   },
                   {
                     label: "Delete",
                     onClick: () => console.log("Delete clicked"),
-                    iconPath: mdiDelete,
+                    icon: Trash,
                     disabled: true,
                   },
                 ]}

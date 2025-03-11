@@ -1,16 +1,16 @@
-import {mdiAccount} from "@mdi/js"
+import { User, LucideIcon } from "lucide-react"
 import {Icon} from "./icon-component"
 
 type UserAvatarProps = {
   name?: string
   size?: "sm" | "md" | "lg"
-  iconPath?: string
+  icon?: LucideIcon
 }
 
 export function UserAvatar({
   name,
   size = "md",
-  iconPath = mdiAccount,
+  icon = User,
 }: UserAvatarProps) {
   // Generate initials from name
   const initials = name
@@ -32,7 +32,7 @@ export function UserAvatar({
   return (
     <div
       className={`${sizeClasses[size]} rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white font-medium`}>
-      {name ? initials : <Icon path={iconPath} size={size === "lg" ? 28 : size === "md" ? 20 : 16} color="white" />}
+      {name ? initials : <Icon icon={icon} size={size === "lg" ? 28 : size === "md" ? 20 : 16} color="white" />}
     </div>
   )
 }

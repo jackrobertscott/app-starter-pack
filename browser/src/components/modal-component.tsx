@@ -5,7 +5,7 @@ import {
   Transition,
   TransitionChild,
 } from "@headlessui/react"
-import {mdiClose} from "@mdi/js"
+import { X } from "lucide-react"
 import {Fragment, ReactNode} from "react"
 import {Icon} from "./icon-component"
 
@@ -74,7 +74,7 @@ export function Modal({
                       className="text-gray-400 hover:text-gray-500 focus:outline-none"
                       onClick={onClose}>
                       <span className="sr-only">Close</span>
-                      <Icon path={mdiClose} size={24} />
+                      <Icon icon={X} size={24} />
                     </button>
                   )}
                 </div>

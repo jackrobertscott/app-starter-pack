@@ -1,4 +1,4 @@
-import {mdiEmail, mdiLock} from "@mdi/js"
+import { Mail, Lock, LucideIcon } from "lucide-react"
 import {RefObject} from "react"
 import {Icon} from "./icon-component"
 
@@ -9,7 +9,7 @@ type TextFieldProps = {
   onChange: (value: string) => void
   type?: string
   inputRef?: RefObject<HTMLInputElement | null>
-  iconPath?: string
+  icon?: LucideIcon
 }
 
 export function TextField({
@@ -19,11 +19,11 @@ export function TextField({
   onChange,
   type = "text",
   inputRef,
-  iconPath,
+  icon,
 }: TextFieldProps) {
   // Set default icon based on field type if not provided
-  const defaultIconPath = type === "password" ? mdiLock : mdiEmail
-  const fieldIcon = iconPath || defaultIconPath
+  const defaultIcon = type === "password" ? Lock : Mail
+  const fieldIcon = icon || defaultIcon
 
   // Handle input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +39,7 @@ export function TextField({
       </label>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <Icon path={fieldIcon} size={20} color="#9ca3af" />
+          <Icon icon={fieldIcon} size={20} color="#9ca3af" />
         </div>
         <input
           ref={inputRef}

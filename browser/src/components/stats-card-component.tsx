@@ -1,9 +1,10 @@
 import {Icon} from "./icon-component"
+import { LucideIcon } from "lucide-react"
 
 type StatsCardProps = {
   title: string
   value: string | number
-  iconPath: string
+  icon: LucideIcon
   iconColor?: string
   accentColor?: string
   trend?: {
@@ -15,7 +16,7 @@ type StatsCardProps = {
 export function StatsCard({
   title,
   value,
-  iconPath,
+  icon,
   iconColor = "white",
   accentColor = "bg-blue-600",
   trend,
@@ -43,7 +44,7 @@ export function StatsCard({
         </div>
         
         <div className={`${accentColor} rounded-md p-1.5`}>
-          <Icon path={iconPath} size={18} color={iconColor} />
+          <Icon icon={icon} size={18} color={iconColor} />
         </div>
       </div>
     </div>

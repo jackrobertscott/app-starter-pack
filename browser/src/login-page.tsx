@@ -1,6 +1,6 @@
 import {useTRPC} from "@browser/utils-trpc-context"
 import {getRememberMe, getSavedEmail, setAuthToken} from "@browser/utils-auth"
-import {mdiAccount, mdiEmail, mdiLock, mdiLogin} from "@mdi/js"
+import { User, Mail, Lock, LogIn } from "lucide-react"
 import {useMutation} from "@tanstack/react-query"
 import React, {useEffect, useRef, useState} from "react"
 import {Link, useLocation, useNavigate} from "react-router-dom"
@@ -60,7 +60,7 @@ export function LoginPage() {
   }
 
   return (
-    <FormCard title="Welcome Back" iconPath={mdiAccount}>
+    <FormCard title="Welcome Back" icon={User}>
       <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
         {error && (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
@@ -75,7 +75,7 @@ export function LoginPage() {
             value={email}
             onChange={setEmail}
             inputRef={emailInputRef}
-            iconPath={mdiEmail}
+            icon={Mail}
             type="email"
           />
           <TextField
@@ -85,7 +85,7 @@ export function LoginPage() {
             onChange={setPassword}
             type="password"
             inputRef={passwordInputRef}
-            iconPath={mdiLock}
+            icon={Lock}
           />
         </div>
 
@@ -117,7 +117,7 @@ export function LoginPage() {
         </div>
 
         <div>
-          <Button type="submit" iconPath={mdiLogin} disabled={isLoading}>
+          <Button type="submit" icon={LogIn} disabled={isLoading}>
             {isLoading ? "Signing in..." : "Sign in"}
           </Button>
         </div>

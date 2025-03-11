@@ -1,11 +1,12 @@
 import {ReactNode} from "react"
 import {Icon} from "./icon-component"
+import {LucideIcon} from "lucide-react"
 
 type ButtonProps = {
   type?: "button" | "submit" | "reset"
   children?: ReactNode
   onClick?: () => void
-  iconPath?: string
+  icon?: LucideIcon
   disabled?: boolean
   variant?: "primary" | "secondary" | "outline" | "icon"
   size?: "sm" | "md" | "lg"
@@ -16,7 +17,7 @@ export function Button({
   type = "button",
   children,
   onClick,
-  iconPath,
+  icon,
   disabled = false,
   variant = "primary",
   size = "md",
@@ -54,9 +55,9 @@ export function Button({
         ${fullWidth ? "w-full" : ""}
         ${disabled ? "opacity-50 cursor-not-allowed" : ""}
       `}>
-      {iconPath && (
+      {icon && (
         <Icon
-          path={iconPath}
+          icon={icon}
           size={size === "lg" ? 20 : size === "md" ? 18 : 16}
           className={children ? "mr-2" : ""}
         />

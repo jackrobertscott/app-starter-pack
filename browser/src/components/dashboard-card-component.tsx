@@ -1,10 +1,11 @@
 import {ReactNode} from "react"
 import {Icon} from "./icon-component"
+import { LucideIcon } from "lucide-react"
 
 type DashboardCardProps = {
   title: string
   children: ReactNode
-  iconPath?: string
+  icon?: LucideIcon
   iconColor?: string
   accentColor?: string
   action?: ReactNode
@@ -14,7 +15,7 @@ type DashboardCardProps = {
 export function DashboardCard({
   title,
   children,
-  iconPath,
+  icon,
   iconColor = "white",
   accentColor = "bg-indigo-600",
   action,
@@ -24,9 +25,9 @@ export function DashboardCard({
     <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
       <div className={`px-4 py-3 ${accentColor} flex items-center justify-between`}>
         <div className="flex items-center">
-          {iconPath && (
+          {icon && (
             <div className="rounded-full bg-white/20 p-1.5 mr-2">
-              <Icon path={iconPath} size={18} color={iconColor} />
+              <Icon icon={icon} size={18} color={iconColor} />
             </div>
           )}
           <h3 className="text-base font-medium text-white">{title}</h3>
