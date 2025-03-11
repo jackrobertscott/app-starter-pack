@@ -1,7 +1,7 @@
-import {useTRPC} from "@browser/utils-trpc-context"
 import {getRememberMe, getSavedEmail, setAuthToken} from "@browser/utils-auth"
-import { User, Mail, Lock, LogIn } from "lucide-react"
+import {useTRPC} from "@browser/utils-trpc-context"
 import {useMutation} from "@tanstack/react-query"
+import {Lock, LogIn, Mail, User} from "lucide-react"
 import React, {useEffect, useRef, useState} from "react"
 import {Link, useLocation, useNavigate} from "react-router-dom"
 import {Button} from "./components/button-component"
@@ -27,7 +27,7 @@ export function LoginPage() {
   // Initialize remember me and email from previous preferences
   useEffect(() => {
     setRememberMe(getRememberMe())
-    
+
     // Pre-fill email if it was saved
     const savedEmail = getSavedEmail()
     if (savedEmail) {
@@ -51,7 +51,7 @@ export function LoginPage() {
 
       // Redirect to home page or intended destination
       const destination = location.state?.from || "/home"
-      navigate(destination, { replace: true })
+      navigate(destination, {replace: true})
     } catch (err: any) {
       setError(err.message || "Invalid email or password")
     } finally {
@@ -60,7 +60,7 @@ export function LoginPage() {
   }
 
   return (
-    <FormCard title="Welcome Back" icon={User}>
+    <FormCard title="Welcome" icon={User}>
       <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
         {error && (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
