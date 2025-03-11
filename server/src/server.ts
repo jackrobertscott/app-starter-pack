@@ -1,5 +1,6 @@
 import {authRouter} from "@server/router-auth"
 import {userRouter} from "@server/router-user"
+import {todoRouter} from "@server/router-todo"
 import {serverConfig} from "@server/server-config"
 import {closeMongoConnection, getMongoClient} from "@server/utils-mongodb"
 import {createContext} from "@server/utils-trpc"
@@ -26,7 +27,8 @@ async function initMongoDB() {
 // Create tRPC router
 const appRouter = mergeRouters(
   userRouter,
-  authRouter
+  authRouter,
+  todoRouter
 )
 
 // Initialize the server

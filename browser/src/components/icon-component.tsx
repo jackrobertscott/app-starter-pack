@@ -1,5 +1,4 @@
-import { LucideIcon, LucideProps } from "lucide-react"
-import { cn } from "../lib/utils"
+import {LucideIcon, LucideProps} from "lucide-react"
 
 type IconProps = {
   icon: LucideIcon
@@ -7,7 +6,7 @@ type IconProps = {
   color?: string
   className?: string
   strokeWidth?: number
-} & Omit<LucideProps, 'size' | 'color' | 'className' | 'strokeWidth'>
+} & Omit<LucideProps, "size" | "color" | "className" | "strokeWidth">
 
 export function Icon({
   icon: LucideIcon,
@@ -21,7 +20,7 @@ export function Icon({
     <LucideIcon
       size={size}
       color={color}
-      className={cn(className)}
+      className={className}
       strokeWidth={strokeWidth}
       {...props}
     />

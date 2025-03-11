@@ -1,4 +1,5 @@
 import type {TypeofUser} from "@shared/schemas-user"
+import type {TypeofTodo} from "@shared/schemas-todo"
 import {Collection, Db, MongoClient, ServerApiVersion} from "mongodb"
 import type {Document} from "mongodb"
 import {serverConfig} from "./server-config"
@@ -11,6 +12,7 @@ let connectionPromise: Promise<MongoClient> | null = null
 // MongoDB collection names
 const COLLECTIONS = {
   USERS: "users",
+  TODOS: "todos",
 } as const
 
 /**
@@ -74,6 +76,7 @@ export async function getCollection<T extends Document>(
  */
 export const collections = {
   users: () => getCollection<TypeofUser>(COLLECTIONS.USERS),
+  todos: () => getCollection<TypeofTodo>(COLLECTIONS.TODOS),
 }
 
 /**
